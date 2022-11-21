@@ -10,6 +10,20 @@ app.use(express.static('public'))
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
+app.use('/',auth);
+function middleware(req,res,next){
+  console.log('middleware');
+  if(req.query.stop==1)
+  {
+    res.send('out');
+  }
+  else next();
+}
+function auth(req,res,next){
+  let user='1234';
+  req.user=user;
+  next();
+}
 //Get-List
 app.get('/tasks/', TasksController.getList);
 
