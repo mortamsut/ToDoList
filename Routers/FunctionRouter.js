@@ -19,12 +19,57 @@ router.get('/catgory',(req,res)=>{
     res.send(cat);
 })
 
-router.get('/sortname',(req,res)=>{
+router.get('/sortname',(req,res)=>{//?????????????????????????????
     var sname= data.tasks.sort((a,b)=>{
-        return a.name-b.name
+        return a.name[0]-b.name[0]
     })
     res.send(sname);
 })
+
+router.get('/sortdur',(req,res)=>{
+    var sname= data.tasks.sort((a,b)=>{
+        return a.duration-b.duration
+    })
+    res.send(sname);
+})
+
+router.get('/sumcatgory',(req,res)=>{
+    var sumcatgory=data.tasks.reduce((groupbycat,t)=>{
+        if(!groupbycat[t.category])
+        {groupbycat[t.category]=[]}
+        groupbycat[t.category].push(t);
+
+        return groupbycat;
+    },{})
+    res.send(sumcatgory);
+})
+
+router.get('/sumstatus',(req,res)=>{
+    var sumstatus=data.tasks.reduce((groupbystatus,t)=>{
+        if(!groupbystatus[t.status])
+        groupbystatus[t.status]=[]
+        groupbystatus[t.status].push(t);
+        return groupbystatus;
+    },{})
+    res.send(sumstatus);
+})
+const max=0;
+router.get('/maxtask',(req,res)=>{
+    var maxtask=data.tasks.find(t=>{
+        if(t.duration>max)
+           {max=t.duration
+          return t;
+        }
+     
+    })
+   res.send(maxtask);
+})
+
+
+// const sum=0;
+// router.get('/sumLength',(req,res)=>{
+//      sum += data.tasks.
+// })
 export default router;
 
 
